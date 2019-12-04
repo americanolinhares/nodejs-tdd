@@ -16,6 +16,7 @@ module.exports = {
     },
 
     getById(req, res) {
+
         if (!req.params.id) {
             res.json({ error: 'Should receive an id' })
         }
@@ -24,13 +25,12 @@ module.exports = {
     },
 
     post(req, res) {
-        if (req.body.price <= 0) {
-            return res.json({ error: "Invalid Input" })
+
+        if(req.body.price <= 0 || req.body.description.length < 10){
+            return res.json({error: 'Invalid Input' })
         }
-        if (req.body.description.lenght < 10) {
-            return res.json({ error: "Invalid Input" })
-        }
-        products.items.push(req.body);
-        return res.json({ success: 'Product received!' })
+        
+        products.items.push(req.body)
+        return res.json({success: 'Product added!' })
     }
 };

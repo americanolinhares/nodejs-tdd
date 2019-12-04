@@ -3,21 +3,21 @@ const expect = require('chai').expect;
 const { get, getById, post } = require('../../routes/productsController');
 
 let req = {
-    body: {
+    body: {            
         id: 2,
         name: 'Product 2',
-        description: 'Product 2',
-        price: 30.00
+        description: 'Product2 description',
+        price: 19.00
     },
     params: {},
 };
 
 let reqInvalidDescription = {
-    body: {
+    body: { 
         id: 3,
         name: 'Product 3',
-        description: "Des",
-        price: 10
+        description: 'Pro',
+        price: 1.00
     }
 };
 
@@ -38,6 +38,7 @@ const res = {
 }
 
 describe('Products Route', function() {
+
     describe('get() function', function() {
 
         it('should return object with title ', function() {
@@ -55,31 +56,22 @@ describe('Products Route', function() {
             expect(res.jsonCalledWith).to.be.have.key('success')
         });
     }),
+
     describe('post() function', function() {
 
         it('should add Product', function() {
             post(req, res);
-            expect(res.jsonCalledWith).to.be.eql({ success: 'Product received!'});
+            expect(res.jsonCalledWith).to.be.eql({ success: 'Product added!'});
         });
 
-        it('should not add Product - invalid price', function() {
-            post(reqInvalidPrice, res);
+        it('should not add Product - Invalid Description', function() {
+            post(reqInvalidDescription, res);
             expect(res.jsonCalledWith).to.be.eql({ error: 'Invalid Input'});
         });
 
-        it('should not add Product - invalid description', function() {
-            post(reqInvalidDescription, res);
+        it('should not add Product - Invalid Price', function() {
+            post(reqInvalidPrice, res);
             expect(res.jsonCalledWith).to.be.eql({ error: 'Invalid Input'});
         });
     })
 });
-
-
-
-
-/*
-        it('should not add Product', function() {  
-            post(req, res);
-            expect(res.jsonCalledWith).to.be.have.key('error')
-        });
-*/
